@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu for WhatsApp Integration -->
+    <menuitem id="menu_whatsapp_root" name="WhatsApp Integration" sequence="10"/>
+
+    <!-- WhatsApp Sessions Submenu -->
+    <menuitem id="menu_whatsapp_session"
+              name="WhatsApp Sessions"
+              parent="menu_whatsapp_root"
+              action="action_whatsapp_session"
+              sequence="20"/>
+
+    <!-- WhatsApp Session Action -->
+    <record id="action_whatsapp_session" model="ir.actions.act_window">
+        <field name="name">WhatsApp Sessions</field>
+        <field name="res_model">whatsapp.session</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first WhatsApp session.
+            </p>
+        </field>
+    </record>
+
+    <!-- WhatsApp Session Tree View -->
+    <record id="view_whatsapp_session_tree" model="ir.ui.view">
+        <field name="name">whatsapp.session.tree</field>
+        <field name="model">whatsapp.session</field>
+        <field name="arch" type="xml">
+            <tree string="WhatsApp Sessions">
+                <field name="user_id"/>
+                <field name="state"/>
+                <field name="last_connected"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- WhatsApp Session Form View -->
+   <record id="view_whatsapp_session_form" model="ir.ui.view">
+    <field name="name">whatsapp.session.form</field>
+    <field name="model">whatsapp.session</field>
+    <field name="arch" type="xml">
+        <form string="WhatsApp Integration">
+            <sheet>
+                <group>
+                    <button name="generate_qr_code" type="object" string="Generate QR Code" class="oe_highlight"/>
+                </group>
+                <group>
+                    <button name="get_chat_list" type="object" string="Generate chat" class="oe_highlight"/>
+                </group>
+                <group>
+                    <field name="qr_code_image" widget="image" class="oe_qr_big"/>
+                </group>
+                <group>
+                    <button name="chat_list" type="Text" string="List" class="oe_highlight"/>
+                </group>
+                
+            </sheet>
+        </form>
+    </field>
+</record>
+</odoo>

@@ -1,0 +1,70 @@
+<!-- File: whatsapp_integration/static/src/xml/whatsapp_chat.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Template for WhatsApp channel in sidebar -->
+    <t t-name="whatsapp_integration.WhatsAppChannelItem" owl="1">
+        <div class="o_mail_discuss_sidebar_item o_whatsapp_channel_item" 
+             t-att-data-channel-id="channel.id"
+             t-att-class="{'o_active': activeChannelId === channel.id}">
+            <span class="o_channel_name w">
+                <t t-esc="channel.name"/>
+            </span>
+            <span t-if="channel.counter" class="o_mail_sidebar_needaction badge badge-pill">
+                <t t-esc="channel.counter"/>
+            </span>
+        </div>
+    </t>
+
+    <!-- Template for QR code screen -->
+    <t t-name="whatsapp_integration.QRCodeScreen" owl="1">
+        <div class="o_whatsapp_qr_screen">
+            <div class="o_whatsapp_qr_container">
+                <h3>Connect to WhatsApp</h3>
+                <p>Scan this QR code with your phone to link WhatsApp</p>
+                <div class="o_whatsapp_qr_code">
+                    <img t-att-src="qrCodeData" alt="WhatsApp QR Code"/>
+                </div>
+                <div class="o_whatsapp_qr_instructions">
+                    <p>1. Open WhatsApp on your phone</p>
+                    <p>2. Tap Menu or Settings and select WhatsApp Web</p>
+                    <p>3. Scan the QR code above</p>
+                    <p t-if="state === 'connecting'" class="o_whatsapp_connecting">
+                        Waiting for connection...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- Template for WhatsApp chat view -->
+    <t t-name="whatsapp_integration.ChatView" owl="1">
+        <div class="o_whatsapp_chat_container">
+            <div class="o_whatsapp_chat_header">
+                <div class="o_whatsapp_chat_contact">
+                    <span t-esc="contact.name"/>
+                </div>
+            </div>
+            <div class="o_whatsapp_chat_messages">
+                <t t-foreach="messages" t-as="message">
+                    <div t-att-class="'o_whatsapp_message ' + (message.direction === 'incoming' ? 'o_whatsapp_message_in' : 'o_whatsapp_message_out')">
+                        <div class="o_whatsapp_message_content">
+                            <t t-esc="message.content"/>
+                        </div>
+                        <div class="o_whatsapp_message_time">
+                            <t t-esc="formatTime(message.date)"/>
+                            <t t-if="message.direction === 'outgoing'">
+                                <i t-att-class="'fa ' + getStatusIcon(message.state)"/>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </div>
+            <div class="o_whatsapp_chat_composer">
+                <input type="text" class="o_whatsapp_chat_input" placeholder="Type a message"/>
+                <button class="o_whatsapp_chat_send">
+                    <i class="fa fa-paper-plane"/>
+                </button>
+            </div>
+        </div>
+    </t>
+</templates>
